@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
-import { ShopContext } from '../context/ShopContext';
+import { MyShopContext } from '../context/MyShopContext';
 import { IoMdArrowDropdown } from "react-icons/io";
 import Items from '../components/Items';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 
 const ShopCategory = ({category}) => {
-  const {itemsArr} = useContext(ShopContext);
+  const {itemsArray} = useContext<any>(MyShopContext);
   return (
     <div className='flex flex-col md:flex-row gap-4 mx-auto mt-8 md:mt-12'>
       {/* <div className='fixed z-10  w-full px-2 py-3 rounded-md'>
@@ -54,11 +54,11 @@ const ShopCategory = ({category}) => {
         
       </div> */}
       <div className='grid md:grid-cols-3 grid-cols-1 w-full mt-10 justify-center mx-auto gap-6'>
-        {itemsArr.map((item, i)=> {
-         if (category === item.category) {
-           return <Items key={`${item.title}_${i}`} id={item.id} title={item.title} imgSrc={item.imgSrc} price={item.price} />
+        {itemsArray.map((item, i)=> {
+         if (category === item.categories[0].slug) {
+           return <Items key={`${item.name}_${i}`} id={item.id} title={item.name} imgSrc={item.image.url} price={item.price.formatted_with_code} />
          }else if (category === 'all') {
-           return <Items key={`${item.title}_${i}`} id={item.id} title={item.title} imgSrc={item.imgSrc} price={item.price} />
+           return <Items key={`${item.name}_${i}`} id={item.id} title={item.name} imgSrc={item.image.url} price={item.price.formatted_with_code} />
          }
          else {
            return null;

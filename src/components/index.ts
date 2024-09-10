@@ -8,3 +8,6 @@ export { default as Items } from './Items';
 export { default as ProductDisplay } from './ProductDisplay';
 export { default as GridItems } from './GridItems';
 export { default as RelatedProducts } from './RelatedProducts';
+export { default as Footer } from './Footer';
+export { default as AddressForm } from './AddressForm';
+export { default as PaymentForm } from './PaymentForm';

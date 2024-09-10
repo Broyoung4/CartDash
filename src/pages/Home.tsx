@@ -1,13 +1,37 @@
-import React from 'react';
-import GridItems from '../components/GridItems';
+import React, { useEffect, useState, useContext } from 'react';
+import { ThreeDots } from 'react-loader-spinner';
+import { HashLoader } from 'react-spinners';
 import ThreeGridItems from '../components/ThreeGridItems.tsx';
 import itemsArr from '../utils/Items';
-
+import { commerce } from '../lib/commerce';
+import { MyShopContext } from '../context/MyShopContext';
 
 
 
 const Home: React.FC = () => {
-  //className="group flex h-full w-full items-center justify-center overflow-hidden rounded-lg border bg-white hover:border-blue-600 dark:bg-black relative border-neutral-200 dark:border-neutral-800" 
+  const { itemsArray, cart } = useContext(MyShopContext);
+  console.log(`HomeitemsArray: ${itemsArray}`)
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (itemsArray.length > 0 && cart) {
+      setIsLoading(false);
+    }
+  }, [itemsArray]);
+//   const [items, setItems] = useState<any>([]);
+
+//   const getItems = async () => {
+//     const { data } = await commerce.products.list();
+//     setItems(data);
+//   }
+
+//   useEffect(()=> {
+//     getItems();
+//   },[])
+
+// console.log(items);
+  
   return (
     <section className='flex flex-col sm:px-10 sm:py-8 px-4 py-6 min-h-screen'>
       <div className='grid grid-cols-1 md:grid-cols-2 gap-4 mb-12'>
@@ -16,7 +40,21 @@ const Home: React.FC = () => {
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nibh vitae dictum laoreet, dolor lectus porta quam, et lacinia odio justo ac enim. Aenean sed justo a ipsum volutpat lacinia. Nulla facilisi. Sed sit amet libero nec enim dictum dictum. Donec at elit quis odio tincidunt suscipit. Nulla facilisi. Sed et felis ac nisl bibendum egestas at nec lectus.
         </p>
       </div>
-      <ThreeGridItems items ={itemsArr}/>
+      {isLoading ? (
+        <div className='flex flex-col items-center justify-center gap-4 h-[90vh] px-4 w-full'>
+          <HashLoader 
+            color="#2563EB" 
+            height={80} 
+            width={80} 
+            timeout={3000} // Adjust timeout if needed
+          />
+
+
+        </div>
+) : (
+      <ThreeGridItems items ={itemsArray}/>
+
+) }
     </section>
   );
 };

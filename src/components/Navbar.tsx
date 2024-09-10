@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { Suspense } from 'react';
 import { IoLogoSlack } from "react-icons/io";
 import  NavLinks  from '../utils/NavLinks';
@@ -9,17 +9,25 @@ import { IoCartOutline } from "react-icons/io5";
 import { HiBars3 } from "react-icons/hi2";
 import MobileMenu from './Mobile-menu';
 import MenuComp from './Mobile';
-import { ShopContext } from '../context/ShopContext';
+import { MyShopContext } from '../context/MyShopContext';
 
 const Navbar = () => {
-  const {getTotalCartItems} = useContext(ShopContext);
+const [loading, setLoading] = useState(true);
+const {cart} = useContext(MyShopContext);
+const location = useLocation();
+
+  useEffect(()=> {
+    setLoading(false);
+  },[cart])
+
+  console.log(cart?.total_items);
   return (
     <nav className="relative flex items-center justify-between p-4 lg:px-6">
       <div className="block flex-none md:hidden">
         {/* <MenuComp /> */}
-        <Suspense fallback={null}>
+        {/* <Suspense fallback={null}>
           <MobileMenu menu={NavLinks} />
-        </Suspense>
+        </Suspense> */}
         {/* <HiBars3 size={30} className="h-6 w-6 text-neutral-500 dark:text-white" /> */}
       </div>
       <div className='flex items-start justify-start text-left'>
@@ -50,12 +58,16 @@ const Navbar = () => {
 
 
       {/********** Cart Button **********/}
-      <div className='group flex items-end justify-end space-x-4'>
-        <Link to='/cart' className='flex items-center shadow-2xl px-4 py-3  border bg-white hover:border-blue-600 dark:bg-black relative border-neutral-200 dark:border-neutral-800 rounded-xl '>
-          <IoCartOutline size={20} className='group-hover:scale-110' />
-          <div className='flex items-center justify-center text-red-600 rounded-full'>{getTotalCartItems()}</div>
-        </Link>
-      </div>
+      {location.pathname === '/cart' ? null : (
+        <div className='group flex items-end justify-end space-x-4'>
+          <Link to='/cart' className='flex items-center shadow-2xl px-4 py-3  border bg-white hover:border-blue-600 dark:bg-black relative border-neutral-200 dark:border-neutral-800 rounded-xl '>
+            <IoCartOutline size={20} className='group-hover:scale-110' />
+            {cart?.total_items > 0 && 
+           ( <div className='flex items-center justify-center text-red-600 rounded-full'>{cart.total_items}</div>)}
+          </Link>
+        </div>
+
+      ) }
       
     </nav>
   )

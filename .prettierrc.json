@@ -1,9 +1,11 @@
 {
-  "printWidth": 100, // Maximum line length
-  "tabWidth": 2, // Number of spaces per indent
-  "singleQuote": true, // Use single quotes
-  "trailingComma": "es5", // Add trailing commas
-  "semi": true, // Use semicolons
-  "bracketSpacing": true, // Add space inside brackets
-  "arrowParens": "avoid" // Avoid parentheses around single-argument arrow function
+  "printWidth": 80,
+  "tabWidth": 2,
+  "semi": true,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "bracketSpacing": true,
+  "jsxBracketSameLine": false,
+  "arrowParens": "always",
+  "parser": "typescript"
 }

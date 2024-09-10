@@ -1,10 +1,10 @@
 import React, {useContext} from 'react';
-import { ShopContext } from '../context/ShopContext';
+import { MyShopContext } from '../context/MyShopContext';
 
 import { HiBars3, HiXMark } from "react-icons/hi2";
 
 const CartItems = () => {
-  const {itemsArr, cartItems, removeFromCart, getTotalCartAmount} = useContext(ShopContext);
+  const {itemsArray, cartItems, removeFromCart, getTotalCartAmount} = useContext(MyShopContext);
   return (
     <div>
       {cartItems.length > 0 ? (
@@ -19,7 +19,7 @@ const CartItems = () => {
             <p>Remove</p>
           </div>
           <hr className='h-[3px]  bg-neutral-200 dark:bg-neutral-800'/>
-          {itemsArr.map((e)=> {
+          {itemsArray.map((e)=> {
           if (cartItems[e.id] > 0) {
             return (
 

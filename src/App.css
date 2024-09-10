@@ -2,3 +2,43 @@
 @tailwind components;
 @tailwind utilities;
 
+.stepper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.stepper-list {
+  list-style: none;
+  display: flex;
+  padding: 0;
+}
+
+.stepper-item {
+  padding: 10px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  margin: 0 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.stepper-item.active {
+  background-color: #007bff;
+  color: white;
+}
+
+.stepper-item.hover {
+  background-color: #f0f0f0;
+}
+
+.stepper-number {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.stepper-label {
+  display: block;
+  font-size: 0.8em;
+  margin-top: 5px;
+}
