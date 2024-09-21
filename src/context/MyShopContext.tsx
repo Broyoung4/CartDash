@@ -14,6 +14,8 @@ handleEmptyCart: () => {},
 export default function MyShopContextProvider(props) {
   const [itemsArray, setItemsArray] = useState<any>([]);
   const [cart, setCart] = useState<any>({});
+  const [order, setOrder] = useState<any>({});
+  const [errorMessage, setErrorMessage] = useState<any>('');
 
   const getItems = async () => {
     try {
@@ -25,12 +27,23 @@ export default function MyShopContextProvider(props) {
 
   }
 
-  /*  
-  const handleAddToCart = async (productId, quantity) => {
-const item = await commerce.cart.add(productId, quantity);
-setCart(item);
-};
-*/
+  const refreshCart = async() => {
+    const newCart = await commerce.cart.refresh();
+
+    setCart(newCart);
+  }
+
+  const handleCaptureCheckout = async (checkoutTokenId, newOrder) => {
+    try {
+      const incomingOrder = await commerce.checkout.capture(checkoutTokenId, newOrder); 
+      setOrder(incomingOrder);
+      refreshCart();
+    } catch(error) {
+      setErrorMessage(error.data.error.message);
+    }
+  }
+
+
 
   const handleAddToCart = async (productId, quantity) => {
     try {
@@ -74,7 +87,7 @@ setCart(item);
   console.log(cart);
 
 
-  const contextValue = { itemsArray, handleAddToCart, handleUpdateCartQty, handleEmptyCart, handleRemoveFromCart, cart }
+  const contextValue = { itemsArray, handleAddToCart, handleUpdateCartQty, handleEmptyCart, handleRemoveFromCart, cart, order, handleCaptureCheckout, errorMessage }
   return (
     <MyShopContext.Provider value={contextValue}>
       {props.children}
